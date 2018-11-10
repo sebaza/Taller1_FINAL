@@ -18,7 +18,11 @@ ListClient lc;
 
 Principal::Principal()
 {
+	
+
 	Menu();
+	
+
 }
 
 
@@ -390,14 +394,16 @@ void Principal::MenuBuscar()
 				//algoritmo para pasar string a mayusculas
 				for (int i = 0; i < variable.length(); i++) {
 					variable[i] = toupper(variable[i]);
+					cout << "borra esta linea despues" << endl;
 				}
 				//********************************************
-				if (variable.compare("SOCIAL") || variable != "DEPORTIVO" || variable != "CULTURAL" || variable != "TODOS") {
+				if (!variable.compare("SOCIAL") || variable != "DEPORTIVO" || variable != "CULTURAL" || variable != "TODOS") {
 					cout << "ingreso una opcion no valida" << endl;
 					cout << "se volvera a pedir el tipo asegurese de que es valido" << endl;
 					getline(cin, variable);
 				}
 				else {
+					
 					break;
 				}
 			}
