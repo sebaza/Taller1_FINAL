@@ -1,0 +1,2 @@
+BierFest,Antofagasta,C3,A20,E2,Cultural,PorRealizar,3000
+HalloweenNight,Antofagasta,C5,A20,E7,Cultural,Realizado,3000,2800
