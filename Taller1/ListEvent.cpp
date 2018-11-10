@@ -16,7 +16,7 @@ ListEvent::ListEvent(int total)
 void ListEvent::AgregarEvento(string nombre, string ciudad, string clienteID, string tipo, int CantEsperando,string AdminId)
 {
 	//Falta creador de ID
-	string eventoId = "";
+	string eventoId = "E" + std::to_string(CantidadActual);
 	Event*eventoNuevo = new Event(nombre, ciudad, clienteID, AdminId, eventoId, tipo, "por realizar", CantEsperando, 0);
 	//Llamar funcion para expandir lista.
 	this->ListE[this->CantidadActual] = eventoNuevo;

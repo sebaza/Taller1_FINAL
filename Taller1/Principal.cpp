@@ -18,10 +18,10 @@ ListClient lc;
 
 Principal::Principal()
 {
-	
+
 
 	Menu();
-	
+
 
 }
 
@@ -41,17 +41,17 @@ void Principal::LecturaDeArchivos()
 	string linea;
 	string aux_1;
 
-	if (archivoClientes.is_open()){
+	if (archivoClientes.is_open()) {
 
 		cout << "***************************************************" << endl;
 		while (getline(archivoClientes, linea)) {
-			//crear cliente 
+			//crear cliente
 			Client* clienteNuevo;
-			
-			clienteNuevo = new Client("", "", "", "", 0  );
+
+			clienteNuevo = new Client("", "", "", "", 0);
 
 
-			
+
 			cout << linea << endl; //Imprimir linea
 
 			stringstream ss(linea);
@@ -79,7 +79,7 @@ void Principal::LecturaDeArchivos()
 
 			cout << "***************************************************" << endl;
 			cout << "LISTA DE EVENTOS" << endl;
-			
+
 			//ciclo de eventos
 			string* ls;
 
@@ -111,7 +111,7 @@ void Principal::LecturaDeArchivos()
 	archivoAdmin.open("Administradores.txt", ifstream::in);
 	string aux_2;
 
-	if (archivoAdmin.is_open()){
+	if (archivoAdmin.is_open()) {
 
 		cout << "***************************************************" << endl;
 		while (getline(archivoAdmin, linea)) {
@@ -157,7 +157,7 @@ void Principal::LecturaDeArchivos()
 	archivoEventos.open("Eventos.txt", ifstream::in);
 	string aux_3;
 
-	if (archivoEventos.is_open()){
+	if (archivoEventos.is_open()) {
 		cout << "***************************************************" << endl;
 		while (getline(archivoEventos, linea)) {
 			cout << linea << endl; //Imprimir linea
@@ -216,7 +216,7 @@ void Principal::LecturaDeArchivos()
 void Principal::Menu()
 {
 	LecturaDeArchivos();
-	
+
 	bool menu = true;
 	cout << "Bienvenido a GenEvent" << endl;
 	string opcion;
@@ -244,8 +244,10 @@ void Principal::Menu()
 			break;
 		case 2:
 			MenuAdministrar();
+			break;
 		case 3:
 			MenuBuscar();
+			break;
 		case 4:
 			cout << "Gracias por usar el programa" << endl;
 			Despedidos();
@@ -288,7 +290,7 @@ void Principal::MenuAgregar()
 		string variable8;
 		string variable9;
 		string* variableEventos = new string[10];
-		
+
 
 		switch (opcionVerificada) {
 		case 1:
@@ -300,20 +302,22 @@ void Principal::MenuAgregar()
 			getline(cin, variable2);
 			cout << "Ingrese la id del cliente" << endl;
 			getline(cin, variable3);
-			
-			
+
+
 			cout << "Ingrese el tipo de evento" << endl;
 			getline(cin, variable6);
-			
+
 			cout << "Ingrese la cantidad de personas esperadas" << endl;
 			getline(cin, variable8);
 
 			if (la.BuscarAdmin(variable2) != "") {
-					le.AgregarEvento(variable1, variable2, variable3, variable5, std::stoi(variable8),la.BuscarAdmin(variable2));
+				le.AgregarEvento(variable1, variable2, variable3, variable5, std::stoi(variable8), la.BuscarAdmin(variable2));
 			}
 			else {
-			
+
 			}
+			cout << "Se regresara al menu agregar" << endl;
+			continue;
 
 		case 2:
 			cout << "Ingresar Nombre" << endl;
@@ -334,7 +338,9 @@ void Principal::MenuAgregar()
 				//getline(cin, variable6);
 				//list[i] = variable6;
 			//}
-			la.AgregarAdmin(variable1, variable2, variable3,7000);
+			la.AgregarAdmin(variable1, variable2, variable3, 7000);
+			cout << "Se regresara al menu agregar" << endl;
+			continue;
 
 		case 3:
 			cout << "Ingresar Nombre" << endl;
@@ -345,11 +351,14 @@ void Principal::MenuAgregar()
 			getline(cin, variable3);
 			cout << "Ingresar el numero telefonico" << endl;
 			getline(cin, variable4);
-			lc.AgregarCliente(variable1,variable2,variable3,std::stoi(variable4));
-			break;
+			lc.AgregarCliente(variable1, variable2, variable3, std::stoi(variable4));
+			cout << "Se regresara al menu agregar" << endl;
+			continue;
+
 
 		case 4:
 			cout << "Se regresara al menu principal" << endl;
+			menu = false;
 			Menu();
 			break;
 		}
@@ -396,18 +405,21 @@ void Principal::MenuBuscar()
 					variable[i] = toupper(variable[i]);
 					cout << "borra esta linea despues" << endl;
 				}
+				cout << variable << endl;
 				//********************************************
-				if (!variable.compare("SOCIAL") || variable != "DEPORTIVO" || variable != "CULTURAL" || variable != "TODOS") {
-					cout << "ingreso una opcion no valida" << endl;
-					cout << "se volvera a pedir el tipo asegurese de que es valido" << endl;
-					getline(cin, variable);
+				if (variable =="SOCIAL" || variable=="DEPORTIVO"  || variable== "CULTURAL"  || variable=="TODOS") {
+					cout << "success" << endl;
+					le.BuscarPorEventos(variable);
+					break;
+					
 				}
 				else {
-					
-					break;
+					cout << "ingreso una opcion no valida" << endl;
+					cout << "se volvera a pedir el tipo asegurese de que es valido" << endl;
 				}
 			}
-			le.BuscarPorEventos(variable);
+			continue;
+			cout << "Se regresara al menu buscar" << endl;
 		case 2:
 			cout << "Selecciono buscar Cliente por ciudad" << endl;
 			cout << "Ingrese la ciudad que desea buscar  (o ingrese 'todos' para desplegar todas las ciudades)" << endl;
@@ -419,13 +431,18 @@ void Principal::MenuBuscar()
 			variable[0] = toupper(variable[0]);
 			//********************************************
 			lc.BuscarCliente(variable);
-		
+			cout << "Se regresara al menu buscar" << endl;
+			continue;
+
 		case 3:
 			cout << "Selecciono buscar administradores" << endl;
 			la.DesplegarAdmins();
+			cout << "Se regresara al menu buscar" << endl;
+			continue;
 
 		case 4:
 			cout << "Se regresara al menu principal" << endl;
+			menu = false;
 			break;
 		}
 	}
@@ -443,8 +460,3 @@ void Principal::ReducirLista()
 void Principal::ExpandirLista()
 {
 }
-
-
-
-
-	
