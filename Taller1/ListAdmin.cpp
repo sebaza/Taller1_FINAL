@@ -21,7 +21,7 @@ ListAdmin::~ListAdmin()
 void ListAdmin::AgregarAdmin(string nombre, string apellido, string ciudad, int monto)
 {	
 	//Falta generador de ID
-	string id = "";
+	string id = "A" + std::to_string(CantidadActual);
 	Admin*adminNuevo = new Admin(nombre, apellido, id, ciudad, monto);
 	//Falta aumentar la lista en 1;
 	this->ListaA[this->CantidadActual] = adminNuevo;

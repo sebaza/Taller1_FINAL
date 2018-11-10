@@ -13,7 +13,7 @@ Client::Client(string nombre, string apellido, string ClienteID, string ciudad, 
 	this->ClienteID = ClienteID;
 	this->ciudad = ciudad;
 	this->telefono = telefono;
-	this->eventos = new string[0];
+	this->eventos = new string[10];
 }
 
 string Client::GetNombre()

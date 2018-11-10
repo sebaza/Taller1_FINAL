@@ -156,58 +156,74 @@ void Principal::LecturaDeArchivos()
 	std::ifstream archivoEventos;
 	archivoEventos.open("Eventos.txt", ifstream::in);
 	string aux_3;
+	
 
 	if (archivoEventos.is_open()) {
 		cout << "***************************************************" << endl;
 		while (getline(archivoEventos, linea)) {
+
+			string nombreAux;
+			string ciudadAux;
+			string idAux;
+			string idAdminAux;
+			string idEventoAux;
+			string tipoAux;
+			string estadoAux;
+
 			cout << linea << endl; //Imprimir linea
 
 			stringstream ss(linea);
-			getline(ss, aux_3, ',');
-			cout << aux_3 << endl; //Imprimir nombre evento
+			getline(ss, nombreAux, ',');
+			cout << nombreAux << endl; //Imprimir nombre evento
 
-			getline(ss, aux_3, ',');
-			cout << aux_3 << endl; //Imprimir ciudad evento
+			getline(ss, ciudadAux, ',');
+			cout << ciudadAux << endl; //Imprimir ciudad evento
 
-			getline(ss, aux_3, ',');
+			getline(ss, idAux, ',');
 			cout << aux_3 << endl; //Imprimir id del cliente
 
-			getline(ss, aux_3, ',');
+			getline(ss, idAdminAux, ',');
 			cout << aux_3 << endl; //Imprimir id del administrador
 
-			getline(ss, aux_3, ',');
+			getline(ss, idEventoAux, ',');
 			cout << aux_3 << endl; //Imprimir id del evento.
 
-			getline(ss, aux_3, ',');
+			getline(ss, tipoAux, ',');
 			cout << aux_3 << endl; //Imprimir tipo de evento.
 
-			getline(ss, aux_3, ',');
+			getline(ss, estadoAux, ',');
 			cout << aux_3 << endl; //Imprimir estado del evento.
 
 			if (aux_3.compare("Realizado") == 0) {
+				string cantEsp;
+				string cantAsis;
 
-
-				getline(ss, aux_3, ',');
+				getline(ss, cantEsp, ',');
 				cout << aux_3 << endl; //Imprimir cantidad de personas esperadas del evento.
 
 
-				getline(ss, aux_3, ',');
+				getline(ss, cantAsis, ',');
 				cout << aux_3 << endl; //Imprimir cantidad de personas asistentes del evento.
+
+
+				Event *eventoNuevo = new Event(nombreAux, ciudadAux, idAux, idAdminAux, idEventoAux, tipoAux, estadoAux, std::stoi(cantEsp),std::stoi(cantAsis));
 			}
 			else {
-
-				getline(ss, aux_3, ',');
+				string cantEsp;
+				getline(ss, cantEsp , ',');
 				cout << aux_3 << endl; //Imprimir cantidad de personas esperadas del evento.
+				Event *eventoNuevo = new Event(nombreAux, ciudadAux, idAux, idAdminAux, idEventoAux, tipoAux, estadoAux, std::stoi(cantEsp),0);
 			}
 
+			//Falta agregar eventoNuevo a lista le.
+			
+			//Creamos el evento y se añade a la lista
 
+			
 			cout << "***************************************************" << endl;
 			cout << "***************************************************" << endl;
 
 		}
-
-		aux_3.clear(); //Liberacion de memoria para la variable auxiliar.
-
 	}
 
 #pragma endregion Eventos
@@ -280,7 +296,8 @@ void Principal::MenuAgregar()
 		}
 		int opcionVerificada = std::stoi(opcion);
 		//recordar delete() despues
-		string variable1;
+
+		string nombreAux;
 		string variable2;
 		string variable3;
 		string variable4;
@@ -297,13 +314,11 @@ void Principal::MenuAgregar()
 			//HalloweenNight, Antofagasta, C5, A20, E7, Cultural, Realizado, 3000, 2800
 
 			cout << "Ingrese nombre" << endl;
-			getline(cin, variable1);
+			getline(cin, nombreAux);
 			cout << "Ingrese ciudad" << endl;
 			getline(cin, variable2);
 			cout << "Ingrese la id del cliente" << endl;
 			getline(cin, variable3);
-
-
 			cout << "Ingrese el tipo de evento" << endl;
 			getline(cin, variable6);
 
@@ -311,7 +326,7 @@ void Principal::MenuAgregar()
 			getline(cin, variable8);
 
 			if (la.BuscarAdmin(variable2) != "") {
-				le.AgregarEvento(variable1, variable2, variable3, variable5, std::stoi(variable8), la.BuscarAdmin(variable2));
+				le.AgregarEvento(nombreAux, variable2, variable3, variable5, std::stoi(variable8), la.BuscarAdmin(variable2));
 			}
 			else {
 
@@ -321,7 +336,7 @@ void Principal::MenuAgregar()
 
 		case 2:
 			cout << "Ingresar Nombre" << endl;
-			getline(cin, variable1);
+			getline(cin, nombreAux);
 			cout << "Ingrese Apellido" << endl;
 			getline(cin, variable2);
 			cout << "Ingresar ciudad" << endl;
@@ -338,20 +353,20 @@ void Principal::MenuAgregar()
 				//getline(cin, variable6);
 				//list[i] = variable6;
 			//}
-			la.AgregarAdmin(variable1, variable2, variable3, 7000);
+			la.AgregarAdmin(nombreAux, variable2, variable3, 7000);
 			cout << "Se regresara al menu agregar" << endl;
 			continue;
 
 		case 3:
 			cout << "Ingresar Nombre" << endl;
-			getline(cin, variable1);
+			getline(cin, nombreAux);
 			cout << "Ingrese Apellido" << endl;
 			getline(cin, variable2);
 			cout << "Ingresar Ciudad" << endl;
 			getline(cin, variable3);
 			cout << "Ingresar el numero telefonico" << endl;
 			getline(cin, variable4);
-			lc.AgregarCliente(variable1, variable2, variable3, std::stoi(variable4));
+			lc.AgregarCliente(nombreAux, variable2, variable3, std::stoi(variable4));
 			cout << "Se regresara al menu agregar" << endl;
 			continue;
 
