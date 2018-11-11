@@ -93,7 +93,7 @@ int ListAdmin::Utilidades(string AdminID, int utilidad)
 	}
 	if (N_Admin == -1) {
 		valor = this->ListaA[N_Admin]->GetMonto() + utilidad;
-
+		this->ListaA[N_Admin]->SetMonto(valor);
 	}
 
 	return valor;
