@@ -1,2 +1,4 @@
+Fabian;Rojas;A6;Valparaiso;-7000
+
 This outputting a line.
 this is another line.

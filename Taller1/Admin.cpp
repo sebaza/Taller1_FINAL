@@ -40,6 +40,10 @@ int Admin::GetMonto()
 	return monto;
 }
 
+void Admin::AgregarEvento(string evento)
+{
+}
+
 
 string * Admin::GetEvento()
 {

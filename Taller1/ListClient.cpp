@@ -18,12 +18,10 @@ ListClient::~ListClient()
 {
 }
 
-void ListClient::AgregarCliente(string nombre, string apellido, string ciudad, int telefono)
+void ListClient::AgregarCliente(Client*nuevoCliente)
 {
-	//Falta generador de ID para cliente
-	string id = "C" + std::to_string(CantidadActual);
-	Client* NuevoCliente = new Client(nombre, apellido,id, ciudad,telefono);
-	this->ListC[this->CantidadActual] = NuevoCliente;
+	
+	this->ListC[this->CantidadActual] = nuevoCliente;
 	this->CantidadActual++;
 }
 
@@ -49,4 +47,9 @@ void ListClient::BuscarCliente(string ciudad)
 
 
 	}
+}
+
+int ListClient::GetCantidad()
+{
+	return this->CantidadActual;
 }

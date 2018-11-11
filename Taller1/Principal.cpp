@@ -11,15 +11,15 @@
 #include <algorithm>
 using namespace std;
 
-ListEvent le;
-ListAdmin la;
-ListClient lc;
+ListEvent le = ListEvent(100);
+ListAdmin la = ListAdmin(100);
+ListClient lc = ListClient(100);
 
 
 Principal::Principal()
 {
 
-
+	LecturaDeArchivos();
 	Menu();
 
 
@@ -39,8 +39,6 @@ void Principal::LecturaDeArchivos()
 	archivoClientes.open("Clientes.txt", ifstream::in);
 
 	string linea;
-	
-
 	string C_nombre;
 	string C_apellido;
 	string C_id;
@@ -52,12 +50,6 @@ void Principal::LecturaDeArchivos()
 		cout << "***************************************************" << endl;
 		while (getline(archivoClientes, linea)) {
 			//crear cliente
-			
-
-			
-
-
-
 			cout << linea << endl; //Imprimir linea
 
 			stringstream ss(linea);
@@ -81,7 +73,7 @@ void Principal::LecturaDeArchivos()
 			getline(ss, C_numero, ';');
 			cout << C_numero << endl; //Imprimir numero
 			
-
+			Client*clienteNuevo = new Client(C_nombre, C_apellido, C_id, C_ciudad, std::stoi(C_numero));
 			cout << "***************************************************" << endl;
 			cout << "LISTA DE EVENTOS" << endl;
 
@@ -91,10 +83,10 @@ void Principal::LecturaDeArchivos()
 			while (!ss.eof()) {
 				string evento;
 				getline(ss, evento, ';');
-
+				clienteNuevo->AgregarEvento(evento);
 				cout << evento << endl; //Imprimir linea
 			}
-			Client*clienteNuevo = new Client(C_nombre, C_apellido, C_id, C_ciudad,std::stoi( C_numero));
+			lc.AgregarCliente(clienteNuevo);
 			//falta agregar a lista
 			cout << "***************************************************" << endl;
 
@@ -144,6 +136,7 @@ void Principal::LecturaDeArchivos()
 			getline(ss, A_monto, ';');
 			cout << A_monto << endl; //Imprimir monto
 			
+			Admin *nuevoAdmin =new Admin(A_nombre, A_apellido, A_id, A_ciudad, std::stoi(A_monto));
 			cout << "***************************************************" << endl;
 			//ciclo de eventos
 			cout << "LISTA DE EVENTOS" << endl;
@@ -151,11 +144,14 @@ void Principal::LecturaDeArchivos()
 				string evento;
 				getline(ss, evento, ';');
 				cout << evento << endl; //Imprimir linea
+				cout << la.GetCantidad() << endl;
+				nuevoAdmin->AgregarEvento(evento);
+				cout << la.GetCantidad() << endl;
 			}
-
-			Admin*nuevoAdmin = new Admin(A_nombre, A_apellido, A_id, A_ciudad,std::stoi(A_monto));
-
+		
 			
+
+			la.AgregarAdmin(nuevoAdmin);
 			cout << "***************************************************" << endl;
 
 		}
@@ -169,7 +165,7 @@ void Principal::LecturaDeArchivos()
 
 	std::ifstream archivoEventos;
 	archivoEventos.open("Eventos.txt", ifstream::in);
-	string aux_3;
+	
 	
 
 	if (archivoEventos.is_open()) {
@@ -188,47 +184,35 @@ void Principal::LecturaDeArchivos()
 
 			stringstream ss(linea);
 			getline(ss, E_nombre, ',');
-			cout << E_nombre << endl; //Imprimir nombre evento
-
 			getline(ss, E_ciudad, ',');
-			cout << E_ciudad << endl; //Imprimir ciudad evento
-
 			getline(ss, E_idCliente, ',');
-			cout << aux_3 << endl; //Imprimir id del cliente
-
 			getline(ss, E_idAdmin, ',');
-			cout << aux_3 << endl; //Imprimir id del administrador
-
 			getline(ss, E_id, ',');
-			cout << aux_3 << endl; //Imprimir id del evento.
-
 			getline(ss, E_tipo, ',');
-			cout << aux_3 << endl; //Imprimir tipo de evento.
-
 			getline(ss, E_estado, ',');
-			cout << aux_3 << endl; //Imprimir estado del evento.
+			
 
-			if (aux_3.compare("Realizado") == 0) {
+			if (E_estado.compare("Realizado") == 0) {
 				string cantEsp;
 				string cantAsis;
 
 				getline(ss, cantEsp, ',');
-				cout << aux_3 << endl; //Imprimir cantidad de personas esperadas del evento.
-
-
 				getline(ss, cantAsis, ',');
-				cout << aux_3 << endl; //Imprimir cantidad de personas asistentes del evento.
+				
 
 
 				Event *eventoNuevo = new Event(E_nombre, E_ciudad, E_idCliente, E_idAdmin, E_id, E_tipo, E_estado, std::stoi(cantEsp),std::stoi(cantAsis));
+				le.AgregarEvento(eventoNuevo);
 			}
 			else {
 				string cantEsp;
 				getline(ss, cantEsp , ',');
-				cout << aux_3 << endl; //Imprimir cantidad de personas esperadas del evento.
+				cout << cantEsp << endl; //Imprimir cantidad de personas esperadas del evento.
 				Event *eventoNuevo = new Event(E_nombre, E_ciudad, E_idCliente, E_idAdmin, E_id, E_tipo, E_estado, std::stoi(cantEsp),0);
+				le.AgregarEvento(eventoNuevo);
 			}
 
+			
 			//Falta agregar eventoNuevo a lista le.
 			
 			//Creamos el evento y se añade a la lista
@@ -245,7 +229,7 @@ void Principal::LecturaDeArchivos()
 
 void Principal::Menu()
 {
-	LecturaDeArchivos();
+	
 	
 	bool menu = true;
 	cout << "Bienvenido a GenEvent" << endl;
@@ -438,14 +422,11 @@ void Principal::Despedidos()
 	{//Algoritmo que verifica si el admin es despedido dependiendo de su monto
 		for (int i = 0; i < la.GetCantidad(); i++) {
 			if (la.GetLista()[i]->GetMonto() < 0) {
-				outfile << la.GetLista()[i]->Getnombre()<<";"<< la.GetLista()[i]->GetApellido()<<";"<< la.GetLista()[i]->GetAdminID()<<";"<< la.GetLista()[i]->GetCiudad()<<";"<< la.GetLista()[i]->GetMonto() << std::endl;
+				myfile<< la.GetLista()[i]->Getnombre()<<";"<< la.GetLista()[i]->GetApellido()<<";"<< la.GetLista()[i]->GetAdminID()<<";"<< la.GetLista()[i]->GetCiudad()<<";"<< la.GetLista()[i]->GetMonto() << "\n"<< std::endl;
+				//falta eliminar admin.
 			}
 		
 		}
-
-		//texto prueba, DEBE SER BORRADO
-		myfile << "This outputting a line.\n";
-		myfile << "this is another line.\n";
 		myfile.close();
 	}
 }
@@ -459,6 +440,7 @@ void Principal::ExpandirLista()
 }
 
 void Principal::AgregarEvento() {
+
 	string nombre;
 	string ciudad;
 	string id;
@@ -476,8 +458,10 @@ void Principal::AgregarEvento() {
 	cout << "Ingrese la cantidad de personas esperadas" << endl;
 	getline(cin, cantidad);
 
-	if (la.BuscarAdmin(ciudad) != "") {
-		le.AgregarEvento(nombre,ciudad, id, tipoEvento, std::stoi(cantidad), la.BuscarAdmin(ciudad));
+	if (la.BuscarAdmin(ciudad) != "" ) {
+		//Falta creador de ID
+		
+		Event*eventoNuevo = new Event(nombre, ciudad, id, la.BuscarAdmin(ciudad), "E" + std::to_string(le.GetCantidad()+1), tipoEvento, "por realizar",std::stoi(cantidad), 0);
 	}
 	else {
 		cout << "Administrador no encontrado en aquella ciudad, no fue posible crear el evento" << endl;
@@ -500,9 +484,12 @@ void Principal::AgregarCliente() {
 	getline(cin, ciudad);
 	cout << "Ingresar el numero telefonico" << endl;
 	getline(cin, numero);
-	lc.AgregarCliente(nombre, apellido,ciudad, std::stoi(numero));
+	Client*clienteNuevo = new Client(nombre, apellido, "C" + std::to_string(lc.GetCantidad()+1), ciudad, std::stoi(numero));
+	lc.AgregarCliente(clienteNuevo);
 	cout << "Se regresara al menu agregar" << endl;
 }
+
+
 void Principal::AgregarAdmin() {
 	string nombre;
 	string apellido;
@@ -513,19 +500,9 @@ void Principal::AgregarAdmin() {
 	getline(cin, apellido);
 	cout << "Ingresar ciudad" << endl;
 	getline(cin, ciudad);
-	//cout << "¿cuantos eventos tiene realizado?(maximo 5)" << endl;
-	//getline(cin, variable5);
-	//while (std::stoi(variable5) > 5) {
-		//cout << "ingreso una cantidad no esperada , intentelo de nuevo" << endl;
-		//getline(cin, variable5);
-	//}
-	//string* list = new string[std::stoi(variable5)];
-	//for (int i = 0; i < std::stoi(variable5); i++) {
-		//cout << "Ingrese id evento " << i << endl;
-		//getline(cin, variable6);
-		//list[i] = variable6;
-	//}
-	la.AgregarAdmin(nombre, apellido, ciudad, 7000);
+	
+	Admin*nuevoAdmin = new Admin(nombre, apellido, "A" + to_string(la.GetCantidad()+1), ciudad, 7000);
+	la.AgregarAdmin(nuevoAdmin);
 	cout << "Se regresara al menu agregar" << endl;
 
 }

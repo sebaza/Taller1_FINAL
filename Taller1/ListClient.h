@@ -6,8 +6,9 @@ public:
 	ListClient();
 	ListClient(int total);
 	~ListClient();
-	void AgregarCliente(string nombre, string apellido, string ciudad, int telefono);
+	void AgregarCliente(Client*nuevoCliente);
 	void BuscarCliente(string ciudad);
+	int GetCantidad();
 private:
 	int total;
 	int CantidadActual;

@@ -73,6 +73,10 @@ void Client::SetTelefono(int telefono)
 
 }
 
+void Client::AgregarEvento(string evento)
+{
+}
+
 
 
 Client::~Client()

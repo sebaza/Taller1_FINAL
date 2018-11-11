@@ -18,14 +18,14 @@ ListAdmin::~ListAdmin()
 {
 }
 
-void ListAdmin::AgregarAdmin(string nombre, string apellido, string ciudad, int monto)
+void ListAdmin::AgregarAdmin(Admin*nuevoAdmin)
 {	
 	//Falta generador de ID
-	string id = "A" + std::to_string(CantidadActual);
-	Admin*adminNuevo = new Admin(nombre, apellido, id, ciudad, monto);
+	
 	//Falta aumentar la lista en 1;
-	this->ListaA[this->CantidadActual] = adminNuevo;
-	this->CantidadActual++;
+	this->ListaA[this->CantidadActual] = nuevoAdmin;
+	this->CantidadActual ++;
+
 	
 }
 
@@ -39,6 +39,7 @@ string ListAdmin::BuscarAdmin(string ciudad)
 
 void ListAdmin::DesplegarAdmins()
 {
+	
 	cout << "LISTADO DE ADMINISTRADORES" << endl;
 	cout << "***********************" << endl;
 	for (int i = 0; i < CantidadActual; i++) {
@@ -47,6 +48,7 @@ void ListAdmin::DesplegarAdmins()
 
 			cout << i + 1 << "Nombre: " << this->ListaA[i]->Getnombre() << "||" << "Apellido: " << this->ListaA[i]->GetApellido() << "||" << "Id: " << this->ListaA[i]->GetAdminID() << "||" << "Monto: " << this->ListaA[i]->GetMonto() << endl;
 			//Ciclo Eventos
+
 			//nombre,id,estado
                    
 

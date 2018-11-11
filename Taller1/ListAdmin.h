@@ -6,7 +6,7 @@ public:
 	ListAdmin();
 	ListAdmin(int total);
 	~ListAdmin();
-	void AgregarAdmin(string nombre, string apellido, string ciudad, int monto);
+	void AgregarAdmin(Admin*nuevoAdmin);
 	string BuscarAdmin(string ciudad);
 	void DesplegarAdmins();
 	void AdminDespedido(bool);

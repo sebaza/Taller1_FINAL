@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <iostream>
-
+#include "Event.h"
 using namespace std;
 class Client
 {
@@ -22,6 +22,7 @@ public:
 	void SetCiudad(string ciudad);
 	void SetTelefono(int telefono);
 
+	void AgregarEvento(string evento);
 
 	~Client();
 private:
