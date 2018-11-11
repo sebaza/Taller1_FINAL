@@ -296,78 +296,24 @@ void Principal::MenuAgregar()
 		}
 		int opcionVerificada = std::stoi(opcion);
 		//recordar delete() despues
-
-		string nombreAux;
-		string variable2;
-		string variable3;
-		string variable4;
-		string variable5;
-		string variable6;
-		string variable7;
-		string variable8;
-		string variable9;
+		
+		
 		string* variableEventos = new string[10];
 
 
 		switch (opcionVerificada) {
 		case 1:
 			//HalloweenNight, Antofagasta, C5, A20, E7, Cultural, Realizado, 3000, 2800
-			
-			cout << "Ingrese nombre" << endl;
-			getline(cin, nombreAux);
-			cout << "Ingrese ciudad" << endl;
-			getline(cin, variable2);
-			cout << "Ingrese la id del cliente" << endl;
-			getline(cin, variable3);
-			cout << "Ingrese el tipo de evento" << endl;
-			getline(cin, variable6);
-
-			cout << "Ingrese la cantidad de personas esperadas" << endl;
-			getline(cin, variable8);
-
-			if (la.BuscarAdmin(variable2) != "") {
-				le.AgregarEvento(nombreAux, variable2, variable3, variable5, std::stoi(variable8), la.BuscarAdmin(variable2));
-			}
-			else {
-
-			}
-			cout << "Se regresara al menu agregar" << endl;
+			AgregarEvento();
 			continue;
 
 		case 2:
-			cout << "Ingresar Nombre" << endl;
-			getline(cin, nombreAux);
-			cout << "Ingrese Apellido" << endl;
-			getline(cin, variable2);
-			cout << "Ingresar ciudad" << endl;
-			getline(cin, variable3);
-			//cout << "¿cuantos eventos tiene realizado?(maximo 5)" << endl;
-			//getline(cin, variable5);
-			//while (std::stoi(variable5) > 5) {
-				//cout << "ingreso una cantidad no esperada , intentelo de nuevo" << endl;
-				//getline(cin, variable5);
-			//}
-			//string* list = new string[std::stoi(variable5)];
-			//for (int i = 0; i < std::stoi(variable5); i++) {
-				//cout << "Ingrese id evento " << i << endl;
-				//getline(cin, variable6);
-				//list[i] = variable6;
-			//}
-			la.AgregarAdmin(nombreAux, variable2, variable3, 7000);
-			cout << "Se regresara al menu agregar" << endl;
+			AgregarAdmin();
 			continue;
 
 		case 3:
-			cout << "Ingresar Nombre" << endl;
-			getline(cin, nombreAux);
-			cout << "Ingrese Apellido" << endl;
-			getline(cin, variable2);
-			cout << "Ingresar Ciudad" << endl;
-			getline(cin, variable3);
-			cout << "Ingresar el numero telefonico" << endl;
-			getline(cin, variable4);
-			lc.AgregarCliente(nombreAux, variable2, variable3, std::stoi(variable4));
-			cout << "Se regresara al menu agregar" << endl;
+			
+			AgregarCliente();
 			continue;
 
 
@@ -403,19 +349,14 @@ void Principal::MenuAdministrar()
 		int opcionVerificada = std::stoi(opcion);
 		//recordar delete() despues
 
-		string variableID;
-		string  variable_cantidad;
+		
 		switch (opcionVerificada) {
 		case 1:
-			cout << "Porfavor ingrese la id del eveto" << endl;
-			getline(cin, variableID);
-			cout << "Porfavor ingrese la cantidad de personas que asistieron" << endl;
-			getline(cin, variable_cantidad);
-			le.EventoRealizado(variableID, std::stoi(variable_cantidad));
+			RealizarEvento();
+			continue;
 		case 2:
-			cout << "Porfavor ingrese la id del eveto que quiera cancelar" << endl;
-			getline(cin, variableID);
-			le.EventoCancelado(variableID);
+			CancelarEvento();
+			continue;
 		case 3:
 			cout << "Selecciono volver al menu principal" << endl;
 			menu = false;
@@ -447,53 +388,19 @@ void Principal::MenuBuscar()
 			continue;
 		}
 		int opcionVerificada = std::stoi(opcion);
-		string variable;
-
+		
+		
 		switch (opcionVerificada) {
 		case 1:
-			cout << "Selecciono buscar Eventos por tipo" << endl;
-			cout << "Ingrese el tipo de evento a buscar (o ingrese 'todos' para desplegar todos los eventos)" << endl;
-			while (true) {
-				getline(cin, variable);
-
-				//algoritmo para pasar string a mayusculas
-				for (int i = 0; i < variable.length(); i++) {
-					variable[i] = toupper(variable[i]);
-					cout << "borra esta linea despues" << endl;
-				}
-				cout << variable << endl;
-				//********************************************
-				if (variable =="SOCIAL" || variable=="DEPORTIVO"  || variable== "CULTURAL"  || variable=="TODOS") {
-					cout << "success" << endl;
-					le.BuscarPorEventos(variable);
-					break;
-					
-				}
-				else {
-					cout << "ingreso una opcion no valida" << endl;
-					cout << "se volvera a pedir el tipo asegurese de que es valido" << endl;
-				}
-			}
+			BuscarPorEventos();
 			continue;
 			cout << "Se regresara al menu buscar" << endl;
 		case 2:
-			cout << "Selecciono buscar Cliente por ciudad" << endl;
-			cout << "Ingrese la ciudad que desea buscar  (o ingrese 'todos' para desplegar todas las ciudades)" << endl;
-			getline(cin, variable);
-			//algoritmo para pasar string a mayusculas
-			for (int i = 0; i < variable.length(); i++) {
-				variable[i] = tolower(variable[i]);
-			}
-			variable[0] = toupper(variable[0]);
-			//********************************************
-			lc.BuscarCliente(variable);
-			cout << "Se regresara al menu buscar" << endl;
+			BuscarClientes();
 			continue;
 
 		case 3:
-			cout << "Selecciono buscar administradores" << endl;
-			la.DesplegarAdmins();
-			cout << "Se regresara al menu buscar" << endl;
+			DesplegarAdmins();
 			continue;
 
 		case 4:
@@ -516,3 +423,142 @@ void Principal::ReducirLista()
 void Principal::ExpandirLista()
 {
 }
+
+void Principal::AgregarEvento() {
+	string nombre;
+	string ciudad;
+	string id;
+	string tipoEvento;
+	string cantidad;
+	cout << "Ingrese nombre" << endl;
+	getline(cin, nombre);
+	cout << "Ingrese ciudad" << endl;
+	getline(cin, ciudad);
+	cout << "Ingrese la id del cliente" << endl;
+	getline(cin, id);
+	cout << "Ingrese el tipo de evento" << endl;
+	getline(cin, tipoEvento);
+
+	cout << "Ingrese la cantidad de personas esperadas" << endl;
+	getline(cin, cantidad);
+
+	if (la.BuscarAdmin(ciudad) != "") {
+		le.AgregarEvento(nombre,ciudad, id, tipoEvento, std::stoi(cantidad), la.BuscarAdmin(ciudad));
+	}
+	else {
+		cout << "Administrador no encontrado en aquella ciudad, no fue posible crear el evento" << endl;
+		cout << "*****************************************************************************" << endl;
+	}
+	cout << "Se regresara al menu agregar" << endl;
+}
+void Principal::AgregarCliente() {
+
+	string nombre;
+	string apellido;
+	string ciudad;
+	string numero;
+	
+	cout << "Ingresar Nombre" << endl;
+	getline(cin, nombre);
+	cout << "Ingrese Apellido" << endl;
+	getline(cin, apellido);
+	cout << "Ingresar Ciudad" << endl;
+	getline(cin, ciudad);
+	cout << "Ingresar el numero telefonico" << endl;
+	getline(cin, numero);
+	lc.AgregarCliente(nombre, apellido,ciudad, std::stoi(numero));
+	cout << "Se regresara al menu agregar" << endl;
+}
+void Principal::AgregarAdmin() {
+	string nombre;
+	string apellido;
+	string ciudad;
+	cout << "Ingresar Nombre" << endl;
+	getline(cin, nombre);
+	cout << "Ingrese Apellido" << endl;
+	getline(cin, apellido);
+	cout << "Ingresar ciudad" << endl;
+	getline(cin, ciudad);
+	//cout << "¿cuantos eventos tiene realizado?(maximo 5)" << endl;
+	//getline(cin, variable5);
+	//while (std::stoi(variable5) > 5) {
+		//cout << "ingreso una cantidad no esperada , intentelo de nuevo" << endl;
+		//getline(cin, variable5);
+	//}
+	//string* list = new string[std::stoi(variable5)];
+	//for (int i = 0; i < std::stoi(variable5); i++) {
+		//cout << "Ingrese id evento " << i << endl;
+		//getline(cin, variable6);
+		//list[i] = variable6;
+	//}
+	la.AgregarAdmin(nombre, apellido, ciudad, 7000);
+	cout << "Se regresara al menu agregar" << endl;
+
+}
+
+void Principal::BuscarPorEventos()
+{
+	string variable;
+	cout << "Selecciono buscar Eventos por tipo" << endl;
+	cout << "Ingrese el tipo de evento a buscar (o ingrese 'todos' para desplegar todos los eventos)" << endl;
+	while (true) {
+		getline(cin, variable);
+
+		//algoritmo para pasar string a mayusculas
+		for (int i = 0; i < variable.length(); i++) {
+			variable[i] = toupper(variable[i]);
+			cout << "borra esta linea despues" << endl;
+		}
+		cout << variable << endl;
+		//********************************************
+		if (variable == "SOCIAL" || variable == "DEPORTIVO" || variable == "CULTURAL" || variable == "TODOS") {
+			cout << "success" << endl;
+			le.BuscarPorEventos(variable);
+			break;
+
+		}
+		else {
+			cout << "ingreso una opcion no valida" << endl;
+			cout << "se volvera a pedir el tipo asegurese de que es valido" << endl;
+		}
+	}
+}
+void Principal::BuscarClientes()
+{
+	string variable;
+	cout << "Selecciono buscar Cliente por ciudad" << endl;
+	cout << "Ingrese la ciudad que desea buscar  (o ingrese 'todos' para desplegar todas las ciudades)" << endl;
+	getline(cin, variable);
+	//algoritmo para pasar string a mayusculas
+	for (int i = 0; i < variable.length(); i++) {
+		variable[i] = tolower(variable[i]);
+	}
+	variable[0] = toupper(variable[0]);
+	//********************************************
+	lc.BuscarCliente(variable);
+	cout << "Se regresara al menu buscar" << endl;
+}
+void Principal::DesplegarAdmins() {
+	cout << "Selecciono buscar administradores" << endl;
+	la.DesplegarAdmins();
+	cout << "Se regresara al menu buscar" << endl;
+}
+
+void Principal::RealizarEvento()
+{
+	string variableID;
+	string variable_cantidad;
+	cout << "Porfavor ingrese la id del eveto" << endl;
+	getline(cin, variableID);
+	cout << "Porfavor ingrese la cantidad de personas que asistieron" << endl;
+	getline(cin, variable_cantidad);
+	le.EventoRealizado(variableID, std::stoi(variable_cantidad));
+}
+void Principal::CancelarEvento()
+{
+	string variableID;
+	cout << "Porfavor ingrese la id del eveto que quiera cancelar" << endl;
+	getline(cin, variableID);
+	le.EventoCancelado(variableID);
+}
+

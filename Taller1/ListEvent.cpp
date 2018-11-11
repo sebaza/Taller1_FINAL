@@ -28,7 +28,7 @@ void ListEvent::AgregarEvento(string nombre, string ciudad, string clienteID, st
 
 void ListEvent::EventoRealizado(string ID, int CantAsistes)
 {
-	BuscarEventos(ID);
+	
 }
 
 void ListEvent::EventoCancelado(string ID)

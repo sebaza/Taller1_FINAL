@@ -18,6 +18,16 @@ public:
 	void ExpandirLista();
 	void ReducirLista();
 
+	//Funciones Requerimientos funcionales
+	void AgregarEvento();
+	void AgregarCliente();
+	void AgregarAdmin();
 	
+	void BuscarPorEventos();
+	void BuscarClientes();
+	void DesplegarAdmins();
+
+	void RealizarEvento();
+	void CancelarEvento();
 };
 
