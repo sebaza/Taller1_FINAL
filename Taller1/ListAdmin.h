@@ -13,7 +13,7 @@ public:
 	void Administradores();
 	void AumentarCant();
 	void DisminuirCant();
-	
+
 	int GetCantidad();
 	int Utilidades(string AdminID, int utilidad);
 	Admin** GetLista();

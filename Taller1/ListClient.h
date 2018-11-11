@@ -1,5 +1,5 @@
 #pragma once
-#include "client.h"
+#include "Client.h"
 class ListClient
 {
 public:
@@ -9,6 +9,8 @@ public:
 	void AgregarCliente(Client*nuevoCliente);
 	void BuscarCliente(string ciudad);
 	int GetCantidad();
+	bool VerificarCliente(string id);
+	Client** GetLista();
 private:
 	int total;
 	int CantidadActual;

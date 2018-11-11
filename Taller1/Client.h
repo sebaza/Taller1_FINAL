@@ -23,7 +23,8 @@ public:
 	void SetTelefono(int telefono);
 
 	void AgregarEvento(string evento);
-
+	int GetCantEventos();
+	string getEvento(int index);
 	~Client();
 private:
 	string nombre;
@@ -32,7 +33,7 @@ private:
 	string ciudad;
 	int telefono;
 	string* eventos;
-
+	int cantEventos;
 
 };
 

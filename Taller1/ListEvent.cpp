@@ -27,6 +27,11 @@ int ListEvent:: GetCantidad() {
 	return this->CantidadActual;
 }
 
+Event ** ListEvent::GetLista()
+{
+	return this->ListE;
+}
+
 int ListEvent::EventoRealizado(string ID, int CantAsistes)
 {
 	int N_Evento = -1;

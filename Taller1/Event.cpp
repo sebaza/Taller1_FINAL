@@ -64,6 +64,11 @@ int Event::GetCantAsistente()
 	return CantAsistente;
 }
 
+void Event::SetEstado(string estado)
+{
+	this->Estado = estado;
+}
+
 
 Event::~Event()
 {

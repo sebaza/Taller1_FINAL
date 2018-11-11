@@ -33,7 +33,20 @@ void ListAdmin::AgregarAdmin(Admin*nuevoAdmin)
 
 string ListAdmin::BuscarAdmin(string ciudad)
 {
-	return "";
+	int menor = 99999;
+	string idAdmin = "";
+	for (int i = 0; i < this->CantidadActual; i++) {
+
+		if (ListaA[i]->GetCiudad() == ciudad) {
+			if (ListaA[i]->GetCantEventos() < menor) {
+				menor = ListaA[i]->GetCantEventos();
+				idAdmin = ListaA[i]->GetAdminID();
+			}
+
+		}
+		
+	}
+	return idAdmin;
 }
 
 

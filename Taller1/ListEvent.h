@@ -11,7 +11,7 @@ public:
 	void BuscarPorEventos(string tipo);
 	string BuscarEventos(string ciudad);
 	int GetCantidad();
-
+	Event** GetLista();
 	void LecturaEvento(Event eventoNuevo);
 	~ListEvent();
 private:

@@ -53,3 +53,19 @@ int ListClient::GetCantidad()
 {
 	return this->CantidadActual;
 }
+
+bool ListClient::VerificarCliente(string id)
+{
+	
+	for (int i = 0; i < CantidadActual; i++) {
+		if (ListC[i]->GetClienteID() == id) {
+			return true;
+		}
+	}
+	return false;
+}
+
+Client ** ListClient::GetLista()
+{
+	return ListC;
+}

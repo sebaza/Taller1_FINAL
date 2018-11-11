@@ -12,9 +12,12 @@ public:
 	string GetApellido();
 	string GetAdminID();
 	string GetCiudad();
+	int GetCantEventos();
+	string getEvento(int index);
 	int GetMonto();
+	void SetMonto(int monto);
 	void AgregarEvento(string evento);
-
+	
 	string* GetEvento();
 	~Admin();
 private:
@@ -24,6 +27,7 @@ private:
 	string ciudad;
 	int monto;
 	string* eventos;
+	int cantEventos;
 };
 
 

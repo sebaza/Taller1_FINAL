@@ -17,7 +17,7 @@ public:
 	string GetEstado();
 	int GetCantEsperado();
 	int GetCantAsistente();
-
+	void SetEstado(string estado);
 	~Event();
 private:
 	string nombre;

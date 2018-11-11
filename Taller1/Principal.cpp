@@ -76,7 +76,7 @@ void Principal::LecturaDeArchivos()
 			Client*clienteNuevo = new Client(C_nombre, C_apellido, C_id, C_ciudad, std::stoi(C_numero));
 			cout << "***************************************************" << endl;
 			cout << "LISTA DE EVENTOS" << endl;
-
+			
 			//ciclo de eventos
 			string* ls;
 
@@ -264,6 +264,7 @@ void Principal::Menu()
 			break;
 		case 4:
 			cout << "Gracias por usar el programa" << endl;
+			ArchivoSalida();
 			Despedidos();
 			getline(cin, pause);
 			menu = false;
@@ -409,27 +410,7 @@ void Principal::MenuBuscar()
 	}
 }
 
-void Principal::Despedidos()
-{
-	std::ofstream outfile("Despedidos.txt");
 
-	outfile << "my text here!" << std::endl;
-	
-	outfile.close();
-
-	ofstream myfile("Despedidos.txt");
-	if (myfile.is_open())
-	{//Algoritmo que verifica si el admin es despedido dependiendo de su monto
-		for (int i = 0; i < la.GetCantidad(); i++) {
-			if (la.GetLista()[i]->GetMonto() < 0) {
-				myfile<< la.GetLista()[i]->Getnombre()<<";"<< la.GetLista()[i]->GetApellido()<<";"<< la.GetLista()[i]->GetAdminID()<<";"<< la.GetLista()[i]->GetCiudad()<<";"<< la.GetLista()[i]->GetMonto() << "\n"<< std::endl;
-				//falta eliminar admin.
-			}
-		
-		}
-		myfile.close();
-	}
-}
 
 void Principal::ReducirLista()
 {
@@ -454,20 +435,51 @@ void Principal::AgregarEvento() {
 	getline(cin, id);
 	cout << "Ingrese el tipo de evento" << endl;
 	getline(cin, tipoEvento);
+	id[0] = toupper(id[0]);
+	
+
+	//algoritmo para pasar string a mayusculas
+	for (int i = 0; i < tipoEvento.length(); i++) {
+		tipoEvento[i] = tolower(tipoEvento[i]);
+	}
+	tipoEvento[0] = toupper(tipoEvento[0]); //hace mayuscula la primera letra 
 
 	cout << "Ingrese la cantidad de personas esperadas" << endl;
 	getline(cin, cantidad);
+	//algoritmo para pasar string a mayusculas
+	for (int i = 0; i < ciudad.length(); i++) {
+		ciudad[i] = tolower(ciudad[i]);
+	}
+	ciudad[0] = toupper(ciudad[0]); //hace mayuscula la primera letra 
 
-	if (la.BuscarAdmin(ciudad) != "" ) {
-		//Falta creador de ID
-		
-		Event*eventoNuevo = new Event(nombre, ciudad, id, la.BuscarAdmin(ciudad), "E" + std::to_string(le.GetCantidad()+1), tipoEvento, "por realizar",std::stoi(cantidad), 0);
+	
+	//Comparo si existe admin en la ciudad y si el tipo de evento es valido.
+	if (la.BuscarAdmin(ciudad) != "" && (tipoEvento == "Social" || tipoEvento == "Cultural" || tipoEvento == "Deportivo")&& lc.VerificarCliente(id) ==true) {
+		//Se crea el evento
+		cout << "EVENTO CREADO" << endl;
+		cout << "**************************" << endl;
+		Event*eventoNuevo = new Event(nombre, ciudad, id, la.BuscarAdmin(ciudad), "E" + std::to_string(le.GetCantidad()+1), tipoEvento, "PorRealizar",std::stoi(cantidad), 0);
+		le.AgregarEvento(eventoNuevo);
 	}
 	else {
-		cout << "Administrador no encontrado en aquella ciudad, no fue posible crear el evento" << endl;
+		//Se cancela la creacion de evento
+
+		if (la.BuscarAdmin(ciudad) == "") {
+			cout <<"Admin no encontrado en esa ciudad, se requiere agregar un admin\n para crear el evento en dicha ciudad (Registre nuevo admin mediante el menu)" << endl;
+			cout << "**************************" << endl;
+		}
+		 if (!(tipoEvento == "Social" || tipoEvento == "Cultural" || tipoEvento == "Deportivo")) {
+			cout << "Tipo evento invalido, Ingrese uno correcto (social, cultural, Deportivo)" << endl;
+			cout << "**************************" << endl;
+		}
+		if (lc.VerificarCliente(id) == false) {
+			cout << "id de Cliente invalido, no fue encontrado un \ncliente dentro del sistema con tal id." << endl;
+			cout << "**************************" << endl;
+		}
 		cout << "*****************************************************************************" << endl;
 	}
 	cout << "Se regresara al menu agregar" << endl;
+	cout << "**************************" << endl;
 }
 void Principal::AgregarCliente() {
 
@@ -518,9 +530,9 @@ void Principal::BuscarPorEventos()
 		//algoritmo para pasar string a mayusculas
 		for (int i = 0; i < variable.length(); i++) {
 			variable[i] = toupper(variable[i]);
-			cout << "borra esta linea despues" << endl;
 		}
-		cout << variable << endl;
+		
+		
 		//********************************************
 		if (variable == "SOCIAL" || variable == "DEPORTIVO" || variable == "CULTURAL" || variable == "TODOS") {
 			cout << "success" << endl;
@@ -581,11 +593,98 @@ void Principal::CancelarEvento()
 	}
 }
 
-
-void Principal::ArchivoSalida()
+void Principal::Despedidos()
 {
 	
-	
+
+	ofstream myfile("Despedidos.txt");
+	if (myfile.is_open())
+	{//Algoritmo que verifica si el admin es despedido dependiendo de su monto
+		for (int i = 0; i < la.GetCantidad(); i++) {
+			if (la.GetLista()[i]->GetMonto() < 0) {
+				myfile << la.GetLista()[i]->Getnombre() << ";" << la.GetLista()[i]->GetApellido() << ";" << la.GetLista()[i]->GetAdminID() << ";" << la.GetLista()[i]->GetCiudad() << ";" << la.GetLista()[i]->GetMonto() << "\n" << std::endl;
+				//falta eliminar admin.
+			}
+
+		}
+		myfile.close();
+	}
+}
+void Principal::ArchivoSalida()
+{
+	std::ofstream ArchivoClientes("Clientes.txt");
+	if (ArchivoClientes.is_open())
+	{
+		string eventos = "";
+		
+		ArchivoClientes << "\n" << endl;
+
+		for (int i = 0; i < lc.GetCantidad(); i++) {
+			for (int v = 0; v < lc.GetLista()[i]->GetCantEventos(); v++) {
+				eventos = eventos + ";" + lc.GetLista()[i]->getEvento(v);
+					
+			}
+
+
+			ArchivoClientes << lc.GetLista()[i]->GetNombre() << ";" << lc.GetLista()[i]->GetApellido() << ";" << lc.GetLista()[i]->GetClienteID() << ";" << lc.GetLista()[i]->GetCiudad() << ";" << lc.GetLista()[i]->GetnTelefono() << ";"<< eventos << "\n"<< endl;
+
+			
+
+
+
+		}
+		ArchivoClientes.close();
+
+	}
+
+		std::ofstream ArchivoAdmins("Administradores.txt");
+		
+		if (ArchivoAdmins.is_open())
+		{
+			string eventos = "";
+
+			for (int i = 0; i < lc.GetCantidad(); i++) {
+
+				for (int v = 0; v < la.GetLista()[i]->GetCantEventos(); v++) {
+
+					string eventos = eventos + ";" + la.GetLista()[i]->getEvento(v);
+					
+				}
+
+				ArchivoAdmins << la.GetLista()[i]->Getnombre() << ";" << la.GetLista()[i]->GetApellido() << ";" << la.GetLista()[i]->GetAdminID() << ";" << la.GetLista()[i]->GetCiudad() << ";" << la.GetLista()[i]->GetMonto() << ";"<< eventos << "\n"<< std::endl;
+
+				
+				
+
+
+
+
+			}
+			ArchivoAdmins.close();
+
+		}
+
+		std::ofstream ArchivoEventos("Eventos.txt");
+		if (ArchivoEventos.is_open())
+		{//Algoritmo que verifica si el admin es despedido dependiendo de su monto
+			for (int i = 0; i < le.GetCantidad(); i++) {
+				if (le.GetLista()[i]->GetTipo() == "Realizado") {
+					ArchivoEventos << le.GetLista()[i]->Getnombre() << ";" << le.GetLista()[i]->Getciudad() << ";" << le.GetLista()[i]->GetClienteID() << ";" << le.GetLista()[i]->GetAdminID() << ";" << le.GetLista()[i]->GetnEventoID() << ";" << le.GetLista()[i]->GetTipo() << ";" << le.GetLista()[i]->GetEstado() << ";" << le.GetLista()[i]->GetCantEsperado() << ";" << le.GetLista()[i]->GetCantAsistente() << "\n" << endl;
+				}
+				else {
+					ArchivoEventos << le.GetLista()[i]->Getnombre() << ";" << le.GetLista()[i]->Getciudad() << ";" << le.GetLista()[i]->GetClienteID() << ";" << le.GetLista()[i]->GetAdminID() << ";" << le.GetLista()[i]->GetnEventoID() << ";" << le.GetLista()[i]->GetTipo() << ";" << le.GetLista()[i]->GetEstado() << ";" << le.GetLista()[i]->GetCantEsperado() << "\n" << endl;
+				}
+
+
+
+
+
+
+			}
+			ArchivoEventos.close();
+
+		}
 
 }
+
 
