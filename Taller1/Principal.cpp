@@ -215,7 +215,7 @@ void Principal::LecturaDeArchivos()
 			
 			//Falta agregar eventoNuevo a lista le.
 			
-			//Creamos el evento y se añade a la lista
+			//Creamos el evento y se aÃ±ade a la lista
 
 			
 			cout << "***************************************************" << endl;
@@ -563,8 +563,10 @@ void Principal::RealizarEvento()
 	getline(cin, variableID);
 	cout << "Porfavor ingrese la cantidad de personas que asistieron" << endl;
 	getline(cin, variable_cantidad);
+	
 	int utilidad = le.EventoRealizado(variableID, std::stoi(variable_cantidad));
-	utilidad = la.Utilidades(variableID, utilidad);
+	int monto = la.Utilidades(variableID, utilidad);
+	
 	if (utilidad < 0) {
 		//despedir
 	}
@@ -574,8 +576,9 @@ void Principal::CancelarEvento()
 	string variableID;
 	cout << "Porfavor ingrese la id del eveto que quiera cancelar" << endl;
 	getline(cin, variableID);
+	
 	int utilidad = le.EventoCancelado(variableID);
-	utilidad = la.Utilidades(variableID, utilidad);
+	int monto = la.Utilidades(variableID, utilidad);
 	if (utilidad < 0) {
 		//despedir
 	}
