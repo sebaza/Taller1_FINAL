@@ -312,7 +312,7 @@ void Principal::MenuAgregar()
 		switch (opcionVerificada) {
 		case 1:
 			//HalloweenNight, Antofagasta, C5, A20, E7, Cultural, Realizado, 3000, 2800
-
+			
 			cout << "Ingrese nombre" << endl;
 			getline(cin, nombreAux);
 			cout << "Ingrese ciudad" << endl;
@@ -382,6 +382,47 @@ void Principal::MenuAgregar()
 
 void Principal::MenuAdministrar()
 {
+	cout << "Selecciono Menu Administras" << endl;
+	string opcion;
+	bool menu = true;
+	while (menu) {
+		cout << "A continuacion se mostraron diferentes opciones que podran elegir" << endl;
+		cout << "Menu Administrar evento:" << endl;
+		cout << "1)Evento Realizado" << endl;
+		cout << "2)Cancelar Evento" << endl;
+		cout << "3)Volver" << endl;
+
+		getline(cin, opcion);
+		try {
+			std::stoi(opcion);
+		}
+		catch (const std::exception) {
+			cout << "Porfavor escriba un numero" << endl;
+			continue;
+		}
+		int opcionVerificada = std::stoi(opcion);
+		//recordar delete() despues
+
+		string variableID;
+		string  variable_cantidad;
+		switch (opcionVerificada) {
+		case 1:
+			cout << "Porfavor ingrese la id del eveto" << endl;
+			getline(cin, variableID);
+			cout << "Porfavor ingrese la cantidad de personas que asistieron" << endl;
+			getline(cin, variable_cantidad);
+			le.EventoRealizado(variableID, std::stoi(variable_cantidad));
+		case 2:
+			cout << "Porfavor ingrese la id del eveto que quiera cancelar" << endl;
+			getline(cin, variableID);
+			le.EventoCancelado(variableID);
+		case 3:
+			cout << "Selecciono volver al menu principal" << endl;
+			menu = false;
+			Menu();
+			break;
+		}
+	}
 }
 
 void Principal::MenuBuscar()
