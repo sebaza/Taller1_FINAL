@@ -13,6 +13,7 @@ public:
 	string GetAdminID();
 	string GetCiudad();
 	int GetMonto();
+
 	string* GetEvento();
 	~Admin();
 private:

@@ -39,43 +39,48 @@ void Principal::LecturaDeArchivos()
 	archivoClientes.open("Clientes.txt", ifstream::in);
 
 	string linea;
-	string aux_1;
+	
+
+	string C_nombre;
+	string C_apellido;
+	string C_id;
+	string C_ciudad;
+	string C_numero;
 
 	if (archivoClientes.is_open()) {
 
 		cout << "***************************************************" << endl;
 		while (getline(archivoClientes, linea)) {
 			//crear cliente
-			Client* clienteNuevo;
+			
 
-			clienteNuevo = new Client("", "", "", "", 0);
+			
 
 
 
 			cout << linea << endl; //Imprimir linea
 
 			stringstream ss(linea);
-			getline(ss, aux_1, ';');
-			cout << aux_1 << endl; //Imprimir nombre
-			clienteNuevo->SetNombre(aux_1);
+			getline(ss, C_nombre, ';');
+			cout << C_nombre << endl; //Imprimir nombre
+			
 
-			getline(ss, aux_1, ';');
-			cout << aux_1 << endl; //Imprimir apellido
-			clienteNuevo->SetApellido(aux_1);
+			getline(ss, C_apellido, ';');
+			cout << C_apellido << endl; //Imprimir apellido
+			
 
-			getline(ss, aux_1, ';');
-			cout << aux_1 << endl; //Imprimir id
-			clienteNuevo->SetClienteID(aux_1);
-
-
-			getline(ss, aux_1, ';');
-			cout << aux_1 << endl; //Imprimir ciudad
-			clienteNuevo->SetCiudad(aux_1);
+			getline(ss, C_id, ';');
+			cout << C_id << endl; //Imprimir id
+			
 
 
-			getline(ss, aux_1, ';');
-			cout << aux_1 << endl; //Imprimir numero
-			clienteNuevo->SetTelefono(std::stoi(aux_1));
+			getline(ss, C_ciudad, ';');
+			cout << C_ciudad << endl; //Imprimir ciudad
+			
+
+			getline(ss, C_numero, ';');
+			cout << C_numero << endl; //Imprimir numero
+			
 
 			cout << "***************************************************" << endl;
 			cout << "LISTA DE EVENTOS" << endl;
@@ -89,13 +94,14 @@ void Principal::LecturaDeArchivos()
 
 				cout << evento << endl; //Imprimir linea
 			}
-
+			Client*clienteNuevo = new Client(C_nombre, C_apellido, C_id, C_ciudad,std::stoi( C_numero));
+			//falta agregar a lista
 			cout << "***************************************************" << endl;
 
 		}
 
 
-		aux_1.clear(); //Liberacion de memoria para la variable auxiliar.
+		
 	}
 
 #pragma endregion Clientes
@@ -104,12 +110,17 @@ void Principal::LecturaDeArchivos()
 
 	//Variables aux
 
-	string monto;
+	
+	string A_nombre;
+	string A_apellido;
+	string A_id;
+	string A_ciudad;
+	string A_monto;
 
 
 	std::ifstream archivoAdmin;
 	archivoAdmin.open("Administradores.txt", ifstream::in);
-	string aux_2;
+	
 
 	if (archivoAdmin.is_open()) {
 
@@ -118,21 +129,21 @@ void Principal::LecturaDeArchivos()
 			cout << linea << endl; //Imprimir linea
 
 			stringstream ss(linea);
-			getline(ss, aux_2, ';');
-			cout << aux_2 << endl; //Imprimir nombre
+			getline(ss, A_nombre, ';');
+			cout << A_nombre << endl; //Imprimir nombre
 
-			getline(ss, aux_2, ';');
-			cout << aux_2 << endl; //Imprimir apellido
+			getline(ss, A_apellido, ';');
+			cout << A_apellido << endl; //Imprimir apellido
 
-			getline(ss, aux_2, ';');
-			cout << aux_2 << endl; //Imprimir id
+			getline(ss, A_id, ';');
+			cout << A_id << endl; //Imprimir id
 
-			getline(ss, aux_2, ';');
-			cout << aux_2 << endl; //Imprimir ciudad
+			getline(ss, A_ciudad, ';');
+			cout << A_ciudad << endl; //Imprimir ciudad
 
-			getline(ss, aux_2, ';');
-			cout << aux_2 << endl; //Imprimir numero
-
+			getline(ss, A_monto, ';');
+			cout << A_monto << endl; //Imprimir monto
+			
 			cout << "***************************************************" << endl;
 			//ciclo de eventos
 			cout << "LISTA DE EVENTOS" << endl;
@@ -142,12 +153,15 @@ void Principal::LecturaDeArchivos()
 				cout << evento << endl; //Imprimir linea
 			}
 
+			Admin*nuevoAdmin = new Admin(A_nombre, A_apellido, A_id, A_ciudad,std::stoi(A_monto));
+
+			
 			cout << "***************************************************" << endl;
 
 		}
 
 
-		aux_2.clear(); //Liberacion de memoria para la variable auxiliar.
+		
 	}
 #pragma endregion Administradores
 
@@ -162,36 +176,36 @@ void Principal::LecturaDeArchivos()
 		cout << "***************************************************" << endl;
 		while (getline(archivoEventos, linea)) {
 
-			string nombreAux;
-			string ciudadAux;
-			string idAux;
-			string idAdminAux;
-			string idEventoAux;
-			string tipoAux;
-			string estadoAux;
+			string E_nombre;
+			string E_ciudad;
+			string E_idCliente;
+			string E_idAdmin;
+			string E_id;
+			string E_tipo;
+			string E_estado;
 
 			cout << linea << endl; //Imprimir linea
 
 			stringstream ss(linea);
-			getline(ss, nombreAux, ',');
-			cout << nombreAux << endl; //Imprimir nombre evento
+			getline(ss, E_nombre, ',');
+			cout << E_nombre << endl; //Imprimir nombre evento
 
-			getline(ss, ciudadAux, ',');
-			cout << ciudadAux << endl; //Imprimir ciudad evento
+			getline(ss, E_ciudad, ',');
+			cout << E_ciudad << endl; //Imprimir ciudad evento
 
-			getline(ss, idAux, ',');
+			getline(ss, E_idCliente, ',');
 			cout << aux_3 << endl; //Imprimir id del cliente
 
-			getline(ss, idAdminAux, ',');
+			getline(ss, E_idAdmin, ',');
 			cout << aux_3 << endl; //Imprimir id del administrador
 
-			getline(ss, idEventoAux, ',');
+			getline(ss, E_id, ',');
 			cout << aux_3 << endl; //Imprimir id del evento.
 
-			getline(ss, tipoAux, ',');
+			getline(ss, E_tipo, ',');
 			cout << aux_3 << endl; //Imprimir tipo de evento.
 
-			getline(ss, estadoAux, ',');
+			getline(ss, E_estado, ',');
 			cout << aux_3 << endl; //Imprimir estado del evento.
 
 			if (aux_3.compare("Realizado") == 0) {
@@ -206,13 +220,13 @@ void Principal::LecturaDeArchivos()
 				cout << aux_3 << endl; //Imprimir cantidad de personas asistentes del evento.
 
 
-				Event *eventoNuevo = new Event(nombreAux, ciudadAux, idAux, idAdminAux, idEventoAux, tipoAux, estadoAux, std::stoi(cantEsp),std::stoi(cantAsis));
+				Event *eventoNuevo = new Event(E_nombre, E_ciudad, E_idCliente, E_idAdmin, E_id, E_tipo, E_estado, std::stoi(cantEsp),std::stoi(cantAsis));
 			}
 			else {
 				string cantEsp;
 				getline(ss, cantEsp , ',');
 				cout << aux_3 << endl; //Imprimir cantidad de personas esperadas del evento.
-				Event *eventoNuevo = new Event(nombreAux, ciudadAux, idAux, idAdminAux, idEventoAux, tipoAux, estadoAux, std::stoi(cantEsp),0);
+				Event *eventoNuevo = new Event(E_nombre, E_ciudad, E_idCliente, E_idAdmin, E_id, E_tipo, E_estado, std::stoi(cantEsp),0);
 			}
 
 			//Falta agregar eventoNuevo a lista le.
@@ -232,7 +246,7 @@ void Principal::LecturaDeArchivos()
 void Principal::Menu()
 {
 	LecturaDeArchivos();
-
+	
 	bool menu = true;
 	cout << "Bienvenido a GenEvent" << endl;
 	string opcion;
@@ -572,14 +586,22 @@ void Principal::RealizarEvento()
 	getline(cin, variableID);
 	cout << "Porfavor ingrese la cantidad de personas que asistieron" << endl;
 	getline(cin, variable_cantidad);
-	le.EventoRealizado(variableID, std::stoi(variable_cantidad));
+	int utilidad = le.EventoRealizado(variableID, std::stoi(variable_cantidad));
+	utilidad = la.Utilidades(variableID, utilidad);
+	if (utilidad < 0) {
+		//despedir
+	}
 }
 void Principal::CancelarEvento()
 {
 	string variableID;
 	cout << "Porfavor ingrese la id del eveto que quiera cancelar" << endl;
 	getline(cin, variableID);
-	le.EventoCancelado(variableID);
+	int utilidad = le.EventoCancelado(variableID);
+	utilidad = la.Utilidades(variableID, utilidad);
+	if (utilidad < 0) {
+		//despedir
+	}
 }
 
 

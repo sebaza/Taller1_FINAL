@@ -29,6 +29,8 @@ void ListAdmin::AgregarAdmin(string nombre, string apellido, string ciudad, int 
 	
 }
 
+
+
 string ListAdmin::BuscarAdmin(string ciudad)
 {
 	return "";
@@ -59,6 +61,16 @@ void ListAdmin::Administradores()
 {
 }
 
+void ListAdmin::AumentarCant()
+{
+	this->CantidadActual++;
+}
+
+void ListAdmin::DisminuirCant()
+{
+	this->CantidadActual--;
+}
+
 int ListAdmin::GetCantidad()
 {
 	return this->CantidadActual;
@@ -67,4 +79,20 @@ int ListAdmin::GetCantidad()
 Admin** ListAdmin::GetLista()
 {
 	return ListaA;
+}
+int ListAdmin::Utilidades(string AdminID, int utilidad)
+{
+	int valor = 0;
+	int N_Admin = -1;
+	for (int i = 0; i < this->CantidadActual; i++) {
+		if (this->ListaA[i]->GetAdminID() == AdminID) {
+			N_Admin = i;
+		}
+	}
+	if (N_Admin == -1) {
+		valor = this->ListaA[N_Admin]->GetMonto() + utilidad;
+
+	}
+
+	return valor;
 }
