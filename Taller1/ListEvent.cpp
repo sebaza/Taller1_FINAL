@@ -26,14 +26,66 @@ void ListEvent::AgregarEvento(string nombre, string ciudad, string clienteID, st
 
 
 
-void ListEvent::EventoRealizado(string ID, int CantAsistes)
+int ListEvent::EventoRealizado(string ID, int CantAsistes)
 {
-	
+	int N_Evento = -1;
+	int MontoGanancia;
+	int MontoPerdida;
+	for (int i = 0; i < this->CantidadActual; i++) {
+		if (this->ListE[i]->GetnEventoID() == ID) {
+			if (this->ListE[i]->GetCantEsperado() > CantAsistes) {
+				N_Evento = i;
+			}
+			else {
+				cout << "no pueden asistir más personas de las esperadas " << endl;
+			}
+		}
+
+	}
+	if (N_Evento > -1) {
+		if (this->ListE[N_Evento]->GetTipo() == "culturales") {
+			MontoGanancia = 4;
+			MontoPerdida = 2;
+		}
+		if (this->ListE[N_Evento]->GetTipo() == "sociales") {
+			MontoGanancia = 9;
+			MontoPerdida = 5;
+		}
+		if (this->ListE[N_Evento]->GetTipo() == "deportivos") {
+			MontoGanancia = 11;
+			MontoPerdida = 8;
+		}
+		int Utilidades = (this->ListE[N_Evento]->GetCantAsistente())*MontoGanancia - (CantAsistes*MontoPerdida);
+		return Utilidades;
+
+	}
 }
 
-void ListEvent::EventoCancelado(string ID)
+int ListEvent::EventoCancelado(string ID)
 {
+	int N_Evento = -1;
+	int MontoPerdida;
+	for (int i = 0; i < this->CantidadActual; i++) {
+		if (this->ListE[i]->GetnEventoID() == ID) {
+			N_Evento = i;
+		}
+	}
+	if (N_Evento > -1) {
+		if (this->ListE[N_Evento]->GetTipo() == "culturales") {
+			MontoPerdida = 2;
+		}
+		if (this->ListE[N_Evento]->GetTipo() == "sociales") {
+			MontoPerdida = 5;
+		}
+		if (this->ListE[N_Evento]->GetTipo() == "deportivos") {
+			MontoPerdida = 8;
+		}
+		int Utilidad = MontoPerdida * (this->ListE[N_Evento]->GetCantEsperado()) * 25 / 100 * -1;
+		return Utilidad;
+	}
+
 }
+
 
 void ListEvent::BuscarPorEventos(string tipo)
 {

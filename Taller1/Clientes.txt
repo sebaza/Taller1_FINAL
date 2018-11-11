@@ -1,1 +1,6 @@
-Cristina;Perez;C20;Antofagasta;57389483;E1;E7;E13
+Cristina;Perez;C1;Antofagasta;89267840;E1;E5;E2
+Esteban;Valdes;C5;Santiago;94695274;E8;E9
+Boris;Sagredo;C4;Calama;54524184;E4
+Gonzalo;Rivera;C6;Valparaiso;83233533;E6
+Vanessa;Quiroga;C3;Antofagasta;90699006;E3;E7
+Marco;Fernandez;C2;Iquique;77497782;E10;E11

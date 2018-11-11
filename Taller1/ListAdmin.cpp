@@ -34,6 +34,7 @@ string ListAdmin::BuscarAdmin(string ciudad)
 	return "";
 }
 
+
 void ListAdmin::DesplegarAdmins()
 {
 	cout << "LISTADO DE ADMINISTRADORES" << endl;
@@ -56,4 +57,14 @@ void ListAdmin::AdminDespedido(bool)
 
 void ListAdmin::Administradores()
 {
+}
+
+int ListAdmin::GetCantidad()
+{
+	return this->CantidadActual;
+}
+
+Admin** ListAdmin::GetLista()
+{
+	return ListaA;
 }

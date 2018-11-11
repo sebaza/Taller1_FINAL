@@ -413,7 +413,27 @@ void Principal::MenuBuscar()
 
 void Principal::Despedidos()
 {
+	std::ofstream outfile("Despedidos.txt");
 
+	outfile << "my text here!" << std::endl;
+	
+	outfile.close();
+
+	ofstream myfile("Despedidos.txt");
+	if (myfile.is_open())
+	{//Algoritmo que verifica si el admin es despedido dependiendo de su monto
+		for (int i = 0; i < la.GetCantidad(); i++) {
+			if (la.GetLista()[i]->GetMonto() < 0) {
+				outfile << la.GetLista()[i]->Getnombre()<<";"<< la.GetLista()[i]->GetApellido()<<";"<< la.GetLista()[i]->GetAdminID()<<";"<< la.GetLista()[i]->GetCiudad()<<";"<< la.GetLista()[i]->GetMonto() << std::endl;
+			}
+		
+		}
+
+		//texto prueba, DEBE SER BORRADO
+		myfile << "This outputting a line.\n";
+		myfile << "this is another line.\n";
+		myfile.close();
+	}
 }
 
 void Principal::ReducirLista()
@@ -560,5 +580,13 @@ void Principal::CancelarEvento()
 	cout << "Porfavor ingrese la id del eveto que quiera cancelar" << endl;
 	getline(cin, variableID);
 	le.EventoCancelado(variableID);
+}
+
+
+void Principal::ArchivoSalida()
+{
+	
+	
+
 }
 

@@ -11,6 +11,9 @@ public:
 	void DesplegarAdmins();
 	void AdminDespedido(bool);
 	void Administradores();
+	int GetCantidad();
+	Admin** GetLista();
+
 private:
 	int total;
 	int CantidadActual;

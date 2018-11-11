@@ -29,5 +29,8 @@ public:
 
 	void RealizarEvento();
 	void CancelarEvento();
+
+	void ArchivoSalida();
+	
 };
 

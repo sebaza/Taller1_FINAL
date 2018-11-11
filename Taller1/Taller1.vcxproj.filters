@@ -76,5 +76,8 @@
     <Text Include="Evento.txt" />
     <Text Include="Administradores.txt" />
     <Text Include="Clientes.txt" />
+    <Text Include="Eventos.txt">
+      <Filter>Archivos de recursos</Filter>
+    </Text>
   </ItemGroup>
 </Project>
